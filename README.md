@@ -16,5 +16,5 @@
 ![5](https://github.com/Maykros/meteoClock/blob/master/media/корректные_символы_влажность_1.jpg)
 ![6](https://github.com/Maykros/meteoClock/blob/master/media/корректные_символы_влажность_2.jpg)
 
-Проверял только на русской версии, английскую не трогал.
+Проверял только на русской версии, английскую не смотрел.
 
