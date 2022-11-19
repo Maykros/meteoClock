@@ -16,3 +16,6 @@
 <img src="https://github.com/Maykros/meteoClock/blob/master/media/корректные_символы_влажность_1.jpg" width="50%" height="50%">
 <img src="https://github.com/Maykros/meteoClock/blob/master/media/корректные_символы_влажность_2.jpg" width="50%" height="50%">
 Проверял только на русской версии, английскую не смотрел.
+
+UPD 19.11.22
+Поправил формулу абсолютной влажности
