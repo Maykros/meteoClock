@@ -3,6 +3,9 @@
 Исправление неподдерживаемых ascii-символов в новых версия lcd2004 дисплея прошивки метеостанции от Norovl
 
 ## Краткое описание:
+UPD 19.11.22
+Поправил формулу абсолютной влажности
+<br></br>
 Установив прошивку Norovl (доработанная прошивка AlexGyver'а) столкнулся с такой проблемой: 
 
 <img src="https://github.com/Maykros/meteoClock/blob/master/media/некорректные_символы_1.jpg" width="50%" height="50%">
@@ -16,6 +19,4 @@
 <img src="https://github.com/Maykros/meteoClock/blob/master/media/корректные_символы_влажность_1.jpg" width="50%" height="50%">
 <img src="https://github.com/Maykros/meteoClock/blob/master/media/корректные_символы_влажность_2.jpg" width="50%" height="50%">
 Проверял только на русской версии, английскую не смотрел.
-<br></br>
-UPD 19.11.22
-Поправил формулу абсолютной влажности
+
