@@ -1,29 +1,71 @@
 void checkBrightness() {
   if (LCD_BRIGHT == 11) {                         // если установлен автоматический режим для экрана (с)НР
-    if (analogRead(PHOTO) < BRIGHT_THRESHOLD) {   // если темно
+    PHOTO_READ = analogRead(PHOTO);
+    //Serial.println(PHOTO_READ);
+    if (PHOTO_READ >= BRIGHT_THRESHOLD) {
+      LED_CF = PHOTO_READ;
+    }
+    else {
+      LED_CF = 500;
+    }
+    BRIGHT_VALUE = map(LED_CF, BRIGHT_THRESHOLD, 1023, LCD_BRIGHT_MIN, LCD_BRIGHT_MAX);
+    //Serial.println(LED_CF);
+    analogWrite(BACKLIGHT, BRIGHT_VALUE);
+  }
+  else {
+    analogWrite(BACKLIGHT, LCD_BRIGHT * LCD_BRIGHT * 2.5);
+  }
+/*
+  if (LCD_BRIGHT == 11) {                         // если установлен автоматический режим для экрана (с)НР
+    if (analogRead(PHOTO) < ) {   // если темно
       analogWrite(BACKLIGHT, LCD_BRIGHT_MIN);
-    } else {                                      // если светло
+    } 
+    else {                                      // если светло
       analogWrite(BACKLIGHT, LCD_BRIGHT_MAX);
     }
   } else {
     analogWrite(BACKLIGHT, LCD_BRIGHT * LCD_BRIGHT * 2.5);
   }
-
+}*/
   if (LED_BRIGHT == 11) {                         // если установлен автоматический режим для индикатора (с)НР
-    if (analogRead(PHOTO) < BRIGHT_THRESHOLD) {   // если темно
-#if (LED_MODE == 0)
-      LED_ON = (LED_BRIGHT_MIN);
-#else
-      LED_ON = (255 - LED_BRIGHT_MIN);
-#endif
-    } else {                                      // если светло
-#if (LED_MODE == 0)
-      LED_ON = (LED_BRIGHT_MAX);
-#else
-      LED_ON = (255 - LED_BRIGHT_MAX);
-#endif
+    PHOTO_READ = analogRead(PHOTO);
+    //Serial.println(PHOTO_READ);
+    if (PHOTO_READ >= BRIGHT_THRESHOLD) {
+      LED_CF = PHOTO_READ;
     }
+    else {
+      LED_CF = 500;
+    }
+    BRIGHT_VALUE = map(LED_CF, BRIGHT_THRESHOLD, 1023, LED_BRIGHT_MIN, LED_BRIGHT_MAX);
+
+    #if (LED_MODE == 0) 
+      LED_ON = BRIGHT_VALUE;
+    #else
+      if (analogRead(PHOTO) < BRIGHT_THRESHOLD) {
+        LED_ON = (255 - LED_BRIGHT_MIN);
+      }
+      else {
+        LED_ON = (255 - LED_BRIGHT_MAX);
+      }
+    #endif
   }
+/*
+    if (analogRead(PHOTO) < BRIGHT_THRESHOLD) {   // если темно
+      #if (LED_MODE == 0)
+        LED_ON = (LED_BRIGHT_MIN);
+      #else
+        LED_ON = (255 - LED_BRIGHT_MIN);
+      #endif
+    } 
+    else {                                      // если светло
+      #if (LED_MODE == 0)
+        LED_ON = (LED_BRIGHT_MAX);
+      #else
+        LED_ON = (255 - LED_BRIGHT_MAX);
+      #endif
+    }
+    
+  }*/
 }
 
 /*
@@ -436,7 +478,7 @@ void readSensors() {
   //Serial.println(dispHum);
   // vapor density - плотность пара (абсолютная влажность)
   dispHum = round(( (((dispHum/100.0) * (0.611*exp((17.502*dispTemp)/(240.97+dispTemp))))*18.02) / (8.31*(273.15+dispTemp)))*1000.0);
-  Serial.println(dispHum);
+  //Serial.println(dispHum);
 
   dispAlt = ((float)dispAlt * 1 + bme.readAltitude(SEALEVELPRESSURE_HPA)) / 2;  // усреднение, чтобы не было резких скачков (с)НР
   dispPres = (float)bme.readPressure() * 0.00750062;
