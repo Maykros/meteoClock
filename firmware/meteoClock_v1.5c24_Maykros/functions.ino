@@ -421,10 +421,23 @@ void redrawPlot() {
 void readSensors() {
   bme.takeForcedMeasurement();
   dispTemp = bme.readTemperature() - 2;
+  //Serial.println("temp:");
+  Serial.println(dispTemp);
   dispHum = bme.readHumidity();
+  //Serial.println("vlazhnost v %:");
+  Serial.println(dispHum);
+  // формула точки росы
+  //Serial.println("kakaya dolzhna bit temperatura dlya vipadeniya rosi:");
+  //Serial.println(243.5f * (log(dispHum / 100.0f) + (17.67f * dispTemp / (243.5f + dispTemp))) / (17.67f - log(dispHum / 100.0f) - (17.67f * dispTemp / (243.5f + dispTemp))));
+
+  // https://www.youtube.com/watch?v=EXjbjIgTgsA
+  // Vapor pressure (равновесное давление пара) = отн влажность * Давление насыщенных паров исходящих от воды (Tetens формула)
+  //dispHum = ((dispHum/100.0) * (0.611*exp((17.502*dispTemp)/(240.97+dispTemp))));
   //Serial.println(dispHum);
-  // формула абсолютной влажности в гр
-  dispHum = (byte) round((243.04f * (log( dispHum / 100.0f) + (17.625f *  dispTemp / (243.04f +   dispTemp))) / (17.625f - log( dispHum / 100.0f) - (17.625f *  dispTemp /(243.04f + dispTemp)))));
+  // vapor density - плотность пара (абсолютная влажность)
+  dispHum = round(( (((dispHum/100.0) * (0.611*exp((17.502*dispTemp)/(240.97+dispTemp))))*18.02) / (8.31*(273.15+dispTemp)))*1000.0);
+  Serial.println(dispHum);
+
   dispAlt = ((float)dispAlt * 1 + bme.readAltitude(SEALEVELPRESSURE_HPA)) / 2;  // усреднение, чтобы не было резких скачков (с)НР
   dispPres = (float)bme.readPressure() * 0.00750062;
 #if (CO2_SENSOR == 1)
