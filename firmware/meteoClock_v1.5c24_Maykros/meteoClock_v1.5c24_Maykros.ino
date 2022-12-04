@@ -173,7 +173,7 @@ unsigned long dayPlotTimer = ((long)2 * 60 * 60 * 1000);  // 2 часа
 
 unsigned long predictTimer = ((long)10 * 60 * 1000);  // 10 минут
 unsigned long plotTimer = hourPlotTimer;
-unsigned long brightTimer = (2000);
+unsigned long brightTimer = ((long)2 * 60 * 1000);
 
 unsigned long sensorsTimerD = 0;
 unsigned long drawSensorsTimerD = 0;

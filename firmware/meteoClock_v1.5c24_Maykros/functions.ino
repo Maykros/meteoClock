@@ -7,7 +7,7 @@ void checkBrightness() {
       LED_CF = PHOTO_READ;
     }
     else {
-      LED_CF = 500;
+      LED_CF = BRIGHT_THRESHOLD;
     }
     BRIGHT_VALUE = map(LED_CF, BRIGHT_THRESHOLD, 1023, LCD_BRIGHT_MIN, LCD_BRIGHT_MAX);
     //Serial.println(LED_CF);
@@ -35,7 +35,7 @@ void checkBrightness() {
       LED_CF = PHOTO_READ;
     }
     else {
-      LED_CF = 500;
+      LED_CF = BRIGHT_THRESHOLD;
     }
     BRIGHT_VALUE = map(LED_CF, BRIGHT_THRESHOLD, 1023, LED_BRIGHT_MIN, LED_BRIGHT_MAX);
 
@@ -463,7 +463,7 @@ void redrawPlot() {
 
 void readSensors() {
   bme.takeForcedMeasurement();
-  dispTemp = bme.readTemperature() - 2;
+  dispTemp = bme.readTemperature();
   //Serial.println("temp:");
   Serial.println(dispTemp);
   dispHum = bme.readHumidity();
